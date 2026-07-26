@@ -1,3 +1,45 @@
+import {
+  FiZap,
+  FiBookOpen,
+  FiLayers,
+  FiCalendar,
+  FiGlobe,
+  FiVolume2,
+} from 'react-icons/fi'
+
+const features = [
+  {
+    icon: FiZap,
+    title: 'AI Summaries',
+    description: 'Generate clear and concise summaries in seconds.',
+  },
+  {
+    icon: FiBookOpen,
+    title: 'Flashcards',
+    description: 'Create smart flashcards for faster memorization.',
+  },
+  {
+    icon: FiLayers,
+    title: 'AI MCQs',
+    description: 'Generate multiple-choice questions automatically.',
+  },
+  {
+    icon: FiCalendar,
+    title: 'Study Planner',
+    description: 'Organize your study schedule with AI assistance.',
+  },
+  {
+    icon: FiGlobe,
+    title: 'Multi-language Support',
+    description: 'Translate notes into multiple languages.',
+  },
+  {
+    icon: FiVolume2,
+    title: 'Text-to-Speech',
+    description: 'Listen to your notes anytime.',
+  },
+]
+
 function Home() {
   return (
     <section className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.18),_transparent_35%),linear-gradient(135deg,_#f8fbff_0%,_#eef4ff_45%,_#fdf2f8_100%)] px-4 py-16 sm:px-6 lg:px-8">
@@ -61,6 +103,35 @@ function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-12 max-w-7xl">
+        <div className="mb-10 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            Everything You Need to Study Smarter
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+            Our AI helps students save time and improve learning with powerful study tools.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {features.map((feature, index) => {
+            const Icon = feature.icon
+            return (
+              <div
+                key={feature.title}
+                className="rounded-[1.5rem] border border-slate-200 bg-white/80 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
+              >
+                <div className="mb-4 inline-flex rounded-2xl bg-indigo-50 p-3 text-indigo-600">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900">{feature.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{feature.description}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
