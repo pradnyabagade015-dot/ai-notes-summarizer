@@ -371,6 +371,23 @@ function Home() {
           })}
         </div>
       </div>
+
+      <div className="mx-auto mt-16 max-w-6xl rounded-[2rem] bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 p-8 text-center text-white shadow-[0_20px_60px_rgba(99,102,241,0.25)] sm:p-10 lg:p-14">
+        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+          Ready to Study Smarter?
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-indigo-50 sm:text-xl">
+          Join students using AI to summarize notes, create flashcards, and prepare for exams faster.
+        </p>
+        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-indigo-700 transition duration-300 hover:-translate-y-1 hover:bg-slate-100">
+            Get Started
+          </button>
+          <button className="rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-white/20">
+            Learn More
+          </button>
+        </div>
+      </div>
     </section>
   )
 }
