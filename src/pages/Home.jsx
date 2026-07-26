@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   FiZap,
   FiBookOpen,
@@ -8,6 +9,7 @@ import {
   FiUpload,
   FiCpu,
   FiTarget,
+  FiChevronDown,
 } from 'react-icons/fi'
 
 const features = [
@@ -108,7 +110,39 @@ const testimonials = [
   },
 ]
 
+const faqs = [
+  {
+    question: 'Which file formats are supported?',
+    answer: 'You can upload PDF, DOCX, and TXT files, or paste notes directly into the platform.',
+  },
+  {
+    question: 'Can I generate MCQs?',
+    answer: 'Yes, the platform can generate multiple-choice questions from your uploaded content.',
+  },
+  {
+    question: 'Does it support multiple languages?',
+    answer: 'Yes, it supports multiple languages so you can study and translate notes more easily.',
+  },
+  {
+    question: 'Can I save my summaries?',
+    answer: 'Yes, your summaries and generated study materials can be saved for later review.',
+  },
+  {
+    question: 'Is my data secure?',
+    answer: 'Your data is handled securely and the app is designed with privacy in mind.',
+  },
+  {
+    question: 'Is it free to use?',
+    answer: 'The app offers a free experience for getting started with study tools and summaries.',
+  },
+]
+
 function Home() {
+  const [openFaq, setOpenFaq] = useState(0)
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? -1 : index)
+  }
   return (
     <section className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.18),_transparent_35%),linear-gradient(135deg,_#f8fbff_0%,_#eef4ff_45%,_#fdf2f8_100%)] px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 rounded-[2rem] border border-white/70 bg-white/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between lg:px-12 lg:py-16">
@@ -296,6 +330,45 @@ function Home() {
               <p className="mt-4 text-sm leading-7 text-slate-600">“{testimonial.review}”</p>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="mx-auto mt-16 max-w-5xl rounded-[2rem] border border-white/70 bg-white/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-10 lg:p-12">
+        <div className="mb-10 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            Frequently Asked Questions
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+            Everything you need to know before getting started.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = openFaq === index
+            return (
+              <div
+                key={faq.question}
+                className="overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.05)]"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleFaq(index)}
+                  className="flex w-full items-center justify-between px-5 py-4 text-left"
+                >
+                  <span className="text-base font-semibold text-slate-900">{faq.question}</span>
+                  <FiChevronDown
+                    className={`h-5 w-5 shrink-0 text-slate-500 transition duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                <div className={`grid transition-all duration-300 ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                  <div className="overflow-hidden">
+                    <p className="px-5 pb-4 text-sm leading-7 text-slate-600">{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
