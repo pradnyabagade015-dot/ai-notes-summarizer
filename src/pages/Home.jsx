@@ -87,6 +87,27 @@ const stats = [
   },
 ]
 
+const testimonials = [
+  {
+    name: 'Aisha Sharma',
+    role: 'Engineering Student',
+    review: 'This AI summarizer helped me prepare for exams in half the time.',
+    initials: 'AS',
+  },
+  {
+    name: 'Rahul Patil',
+    role: 'Medical Student',
+    review: 'The flashcards and MCQs are amazing for quick revision.',
+    initials: 'RP',
+  },
+  {
+    name: 'Sneha Verma',
+    role: 'Computer Science Student',
+    review: 'I love how simple and fast the summaries are.',
+    initials: 'SV',
+  },
+]
+
 function Home() {
   return (
     <section className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.18),_transparent_35%),linear-gradient(135deg,_#f8fbff_0%,_#eef4ff_45%,_#fdf2f8_100%)] px-4 py-16 sm:px-6 lg:px-8">
@@ -235,6 +256,44 @@ function Home() {
               </div>
               <h3 className="text-xl font-semibold text-slate-900">{stat.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">{stat.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mx-auto mt-16 max-w-7xl rounded-[2rem] border border-white/70 bg-white/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-10 lg:p-12">
+        <div className="mb-10 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            What Students Say
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+            Thousands of students are studying smarter with AI Notes Summarizer.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {testimonials.map((testimonial) => (
+            <div
+              key={testimonial.name}
+              className="rounded-[1.75rem] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(15,23,42,0.14)]"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 text-sm font-semibold text-white">
+                  {testimonial.initials}
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900">{testimonial.name}</h3>
+                  <p className="text-sm text-slate-500">{testimonial.role}</p>
+                </div>
+              </div>
+
+              <div className="mt-5 flex gap-1 text-amber-400">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <span key={index}>★</span>
+                ))}
+              </div>
+
+              <p className="mt-4 text-sm leading-7 text-slate-600">“{testimonial.review}”</p>
             </div>
           ))}
         </div>
