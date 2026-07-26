@@ -64,6 +64,29 @@ const steps = [
   },
 ]
 
+const stats = [
+  {
+    number: '10x',
+    title: 'Faster Revision',
+    description: 'Summarize lengthy notes in seconds.',
+  },
+  {
+    number: '99%',
+    title: 'Accurate AI Summaries',
+    description: 'Powered by advanced Gemini AI.',
+  },
+  {
+    number: '24/7',
+    title: 'Available Anytime',
+    description: 'Study whenever you want.',
+  },
+  {
+    number: 'Unlimited',
+    title: 'Notes Supported',
+    description: 'Upload as many notes as you need.',
+  },
+]
+
 function Home() {
   return (
     <section className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.18),_transparent_35%),linear-gradient(135deg,_#f8fbff_0%,_#eef4ff_45%,_#fdf2f8_100%)] px-4 py-16 sm:px-6 lg:px-8">
@@ -188,6 +211,32 @@ function Home() {
               </div>
             )
           })}
+        </div>
+      </div>
+
+      <div className="mx-auto mt-16 max-w-7xl">
+        <div className="mb-10 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            Why Students Love AI Notes Summarizer
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+            Everything you need to study faster, smarter, and with more confidence.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat) => (
+            <div
+              key={stat.title}
+              className="rounded-[1.75rem] border border-slate-200 bg-white/80 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
+            >
+              <div className="mb-4 inline-flex rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 px-4 py-2 text-lg font-semibold text-white shadow-lg">
+                {stat.number}
+              </div>
+              <h3 className="text-xl font-semibold text-slate-900">{stat.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{stat.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
