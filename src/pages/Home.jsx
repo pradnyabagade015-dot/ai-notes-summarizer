@@ -5,6 +5,9 @@ import {
   FiCalendar,
   FiGlobe,
   FiVolume2,
+  FiUpload,
+  FiCpu,
+  FiTarget,
 } from 'react-icons/fi'
 
 const features = [
@@ -37,6 +40,27 @@ const features = [
     icon: FiVolume2,
     title: 'Text-to-Speech',
     description: 'Listen to your notes anytime.',
+  },
+]
+
+const steps = [
+  {
+    number: '01',
+    title: 'Upload Your Notes',
+    description: 'Upload PDF, DOCX, or TXT files, or simply paste your notes.',
+    icon: FiUpload,
+  },
+  {
+    number: '02',
+    title: 'AI Processes Everything',
+    description: 'Gemini AI analyzes your notes and generates summaries, key points, flashcards, and MCQs.',
+    icon: FiCpu,
+  },
+  {
+    number: '03',
+    title: 'Study Smarter',
+    description: 'Review summaries, practice with quizzes, save your notes, and prepare for exams faster.',
+    icon: FiTarget,
   },
 ]
 
@@ -117,7 +141,7 @@ function Home() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {features.map((feature, index) => {
+          {features.map((feature) => {
             const Icon = feature.icon
             return (
               <div
@@ -129,6 +153,38 @@ function Home() {
                 </div>
                 <h3 className="text-xl font-semibold text-slate-900">{feature.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{feature.description}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="mx-auto mt-16 max-w-7xl rounded-[2rem] border border-white/70 bg-white/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-10 lg:p-12">
+        <div className="mb-10 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            How It Works
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
+            Start studying smarter in just three simple steps.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {steps.map((step) => {
+            const Icon = step.icon
+            return (
+              <div
+                key={step.number}
+                className="group rounded-[1.75rem] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(15,23,42,0.14)]"
+              >
+                <div className="mb-5 inline-flex rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+                  {step.number}
+                </div>
+                <div className="mb-4 inline-flex rounded-2xl bg-indigo-50 p-3 text-indigo-600">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900">{step.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
               </div>
             )
           })}
