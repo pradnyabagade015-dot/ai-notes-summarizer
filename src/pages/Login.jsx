@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import { FiEye, FiEyeOff, FiMail, FiLock } from 'react-icons/fi'
 
 function Login() {
   const navigate = useNavigate()
+  const { login } = useAuth()
+
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(true)
@@ -15,7 +18,7 @@ function Login() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setError('')
 
@@ -25,9 +28,19 @@ function Login() {
     }
 
     setLoading(true)
-    window.setTimeout(() => {
-      navigate('/dashboard', { replace: true })
-    }, 400)
+
+    try {
+      await login({
+        email: formData.email.trim(),
+        password: formData.password,
+      })
+      navigate('/upload-notes', { replace: true })
+    } catch (err) {
+      console.error('[Login] Auth error:', err)
+      setError(err.message || 'Invalid email or password.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -63,6 +76,7 @@ function Login() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-indigo-500"
                   placeholder="you@example.com"
+                  required
                 />
               </div>
             </div>
@@ -81,6 +95,7 @@ function Login() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-12 text-sm text-slate-700 outline-none transition focus:border-indigo-500"
                   placeholder="Enter your password"
+                  required
                 />
                 <button
                   type="button"

@@ -1,29 +1,48 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FiMail, FiArrowLeft } from 'react-icons/fi'
+import { apiRequestPasswordReset, apiResetPassword } from '../services/api'
 
 function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const [password, setPassword] = useState('')
+  const { token } = useParams()
+  const navigate = useNavigate()
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setError('')
     setMessage('')
 
-    if (!email.trim()) {
+    if (!token && !email.trim()) {
       setError('Please enter your email address.')
+      return
+    }
+    if (token && password.length < 6) {
+      setError('Password must be at least 6 characters.')
       return
     }
 
     setLoading(true)
-    window.setTimeout(() => {
-      setMessage('This demo form is ready for your future backend integration.')
-      setEmail('')
+    try {
+      if (token) {
+        const response = await apiResetPassword(token, password)
+        setMessage(response.message)
+        setPassword('')
+        window.setTimeout(() => navigate('/login'), 1500)
+      } else {
+        const response = await apiRequestPasswordReset(email.trim())
+        setMessage(response.message)
+        setEmail('')
+      }
+    } catch (err) {
+      setError(err.message || 'Unable to process your request.')
+    } finally {
       setLoading(false)
-    }, 400)
+    }
   }
 
   return (
@@ -31,9 +50,9 @@ function ForgotPassword() {
       <div className="mx-auto flex max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:flex-row">
         <div className="flex flex-1 flex-col justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 p-8 text-white sm:p-10 lg:p-12">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-indigo-100">Reset Password</p>
-          <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">Recover your account</h1>
+          <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">{token ? 'Choose a new password' : 'Recover your account'}</h1>
           <p className="mt-4 max-w-md text-sm leading-7 text-indigo-100 sm:text-base">
-            Enter your email and we will send you a password reset link so you can get back into your account.
+            {token ? 'Choose a secure new password for your account.' : 'Enter your email and we will send you a password reset link so you can get back into your account.'}
           </p>
         </div>
 
@@ -51,7 +70,7 @@ function ForgotPassword() {
               </div>
             ) : null}
 
-            <div>
+            {!token ? <div>
               <label className="mb-2 block text-sm font-medium text-slate-700" htmlFor="email">
                 Email Address
               </label>
@@ -66,14 +85,17 @@ function ForgotPassword() {
                   placeholder="you@example.com"
                 />
               </div>
-            </div>
+            </div> : <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700" htmlFor="password">New Password</label>
+              <input id="password" type="password" minLength="6" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-indigo-500" placeholder="At least 6 characters" required />
+            </div>}
 
             <button
               type="submit"
               disabled={loading}
               className="w-full rounded-2xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition duration-300 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? 'Sending...' : token ? 'Reset Password' : 'Send Reset Link'}
             </button>
 
             <div className="text-center text-sm text-slate-600">

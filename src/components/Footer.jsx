@@ -1,7 +1,8 @@
-import { FiMail, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import { FiMail } from 'react-icons/fi'
 
-const quickLinks = ['Home', 'Dashboard', 'Upload Notes', 'Profile']
-const features = ['AI Summaries', 'Flashcards', 'MCQs', 'Study Planner']
+const quickLinks = [{ label: 'Home', to: '/' }, { label: 'Dashboard', to: '/dashboard' }, { label: 'Upload Notes', to: '/upload-notes' }, { label: 'Profile', to: '/profile' }]
+const features = [{ label: 'AI Summaries', to: '/upload-notes' }, { label: 'Flashcards', to: '/notes' }, { label: 'MCQs', to: '/notes' }, { label: 'Study Planner', to: '/study-planner' }]
 
 function Footer() {
   return (
@@ -22,10 +23,10 @@ function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white">Quick Links</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               {quickLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="transition hover:text-white">
-                    {link}
-                  </a>
+                <li key={link.label}>
+                  <Link to={link.to} className="transition hover:text-white">
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -35,7 +36,7 @@ function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white">Features</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               {features.map((feature) => (
-                <li key={feature}>{feature}</li>
+                <li key={feature.label}><Link to={feature.to} className="transition hover:text-white">{feature.label}</Link></li>
               ))}
             </ul>
           </div>
@@ -47,17 +48,6 @@ function Footer() {
                 <FiMail className="h-4 w-4" />
                 <a href="mailto:hello@ainotessummarizer.com" className="transition hover:text-white">
                   hello@ainotessummarizer.com
-                </a>
-              </li>
-              <li className="flex items-center gap-3 pt-2">
-                <a href="#" className="rounded-full border border-white/10 bg-white/5 p-2 transition hover:border-indigo-400 hover:text-white">
-                  <FiGithub className="h-4 w-4" />
-                </a>
-                <a href="#" className="rounded-full border border-white/10 bg-white/5 p-2 transition hover:border-indigo-400 hover:text-white">
-                  <FiLinkedin className="h-4 w-4" />
-                </a>
-                <a href="#" className="rounded-full border border-white/10 bg-white/5 p-2 transition hover:border-indigo-400 hover:text-white">
-                  <FiTwitter className="h-4 w-4" />
                 </a>
               </li>
             </ul>

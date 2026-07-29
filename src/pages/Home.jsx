@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import {
   FiZap,
   FiBookOpen,
@@ -139,6 +141,10 @@ const faqs = [
 
 function Home() {
   const [openFaq, setOpenFaq] = useState(0)
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+
+  const startStudying = () => navigate(isAuthenticated ? '/upload-notes' : '/signup')
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? -1 : index)
@@ -161,10 +167,10 @@ function Home() {
           </p>
 
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
-            <button className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-indigo-700">
+            <button onClick={startStudying} className="rounded-full bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-indigo-700">
               Get Started
             </button>
-            <button className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:text-indigo-700">
+            <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:text-indigo-700">
               Watch Demo
             </button>
           </div>
@@ -237,7 +243,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="mx-auto mt-16 max-w-7xl rounded-[2rem] border border-white/70 bg-white/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-10 lg:p-12">
+      <div id="how-it-works" className="mx-auto mt-16 max-w-7xl rounded-[2rem] border border-white/70 bg-white/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-10 lg:p-12">
         <div className="mb-10 text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
             How It Works
@@ -380,10 +386,10 @@ function Home() {
           Join students using AI to summarize notes, create flashcards, and prepare for exams faster.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-indigo-700 transition duration-300 hover:-translate-y-1 hover:bg-slate-100">
+          <button onClick={startStudying} className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-indigo-700 transition duration-300 hover:-translate-y-1 hover:bg-slate-100">
             Get Started
           </button>
-          <button className="rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-white/20">
+          <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-1 hover:bg-white/20">
             Learn More
           </button>
         </div>

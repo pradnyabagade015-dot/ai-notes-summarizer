@@ -23,8 +23,27 @@ const userSchema = new mongoose.Schema(
     },
     plan: {
       type: String,
-      enum: ['free', 'pro'],
+      enum: ['free', 'premium'],
       default: 'free',
+    },
+    premiumActivatedAt: {
+      type: Date,
+      default: null,
+    },
+    subscriptionPaymentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'SubscriptionPayment',
+      default: null,
+    },
+    aiUsage: {
+      date: {
+        type: String,
+        default: '',
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
     },
     summariesUsedToday: {
       type: Number,

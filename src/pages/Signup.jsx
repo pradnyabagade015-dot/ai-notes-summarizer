@@ -1,26 +1,27 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import { FiEye, FiEyeOff, FiMail, FiLock, FiUser } from 'react-icons/fi'
 
 function Signup() {
   const navigate = useNavigate()
+  const { register } = useAuth()
+
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     setError('')
-    setMessage('')
 
     if (!formData.name.trim() || !formData.email.trim() || !formData.password.trim() || !formData.confirmPassword.trim()) {
       setError('Please fill in all fields.')
@@ -38,10 +39,20 @@ function Signup() {
     }
 
     setLoading(true)
-    setMessage('Account ready. Redirecting...')
-    window.setTimeout(() => {
-      navigate('/dashboard', { replace: true })
-    }, 400)
+
+    try {
+      await register({
+        fullName: formData.name.trim(),
+        email: formData.email.trim(),
+        password: formData.password,
+      })
+      navigate('/upload-notes', { replace: true })
+    } catch (err) {
+      console.error('[Signup] Auth error:', err)
+      setError(err.message || 'Registration failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -63,12 +74,6 @@ function Signup() {
               </div>
             ) : null}
 
-            {message ? (
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                {message}
-              </div>
-            ) : null}
-
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700" htmlFor="name">
                 Full Name
@@ -83,6 +88,7 @@ function Signup() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-indigo-500"
                   placeholder="Your name"
+                  required
                 />
               </div>
             </div>
@@ -101,6 +107,7 @@ function Signup() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-indigo-500"
                   placeholder="you@example.com"
+                  required
                 />
               </div>
             </div>
@@ -119,6 +126,7 @@ function Signup() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-12 text-sm text-slate-700 outline-none transition focus:border-indigo-500"
                   placeholder="Create a password"
+                  required
                 />
                 <button
                   type="button"
@@ -144,6 +152,7 @@ function Signup() {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-10 pr-12 text-sm text-slate-700 outline-none transition focus:border-indigo-500"
                   placeholder="Confirm password"
+                  required
                 />
                 <button
                   type="button"
