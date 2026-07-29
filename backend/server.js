@@ -38,9 +38,17 @@ app.use(
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true)
-      return callback(new Error('Origin is not allowed by CORS'))
-    },
+  if (!origin) return callback(null, true)
+
+  if (
+    allowedOrigins.includes(origin) ||
+    origin.endsWith('.vercel.app')
+  ) {
+    return callback(null, true)
+  }
+
+  return callback(new Error('Origin is not allowed by CORS'))
+},
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'],
     credentials: true,
