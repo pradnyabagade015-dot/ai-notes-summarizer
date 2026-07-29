@@ -22,8 +22,11 @@ const app = express()
 
 const PORT = process.env.PORT || 5000
 const HOST = process.env.HOST || '0.0.0.0'
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
-  .split(',')
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://ai-notes-summarizer-app-one.vercel.app',
+  ...(process.env.CLIENT_URL || '').split(','),
+]
   .map((origin) => origin.trim())
   .filter(Boolean)
 
@@ -40,6 +43,7 @@ app.use(
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'],
+    credentials: true,
   }),
 )
 app.use(morgan('dev'))
