@@ -12,9 +12,9 @@ function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 px-4 py-3.5 backdrop-blur-md sm:px-6 lg:px-8">
+    <nav aria-label="Primary navigation" className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 px-4 py-3.5 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900">
+        <Link to="/" aria-label="AI Notes Summarizer home" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white shadow-md">
             <FiBookOpen className="h-5 w-5" />
           </span>

@@ -1,0 +1,17 @@
+import PolicyPage from '../components/PolicyPage'
+
+const sections = [
+  { title: 'Information we collect', paragraphs: ['We collect the details needed to create and operate your account, including your name, email address, encrypted password, account plan, and support messages. When you use the study tools, we process the notes, summaries, flashcards, questions, and study plans you choose to create or save.'] },
+  { title: 'How we use your information', items: ['Provide secure authentication and keep your account available across sessions.', 'Process uploaded notes to generate AI-powered summaries, flashcards, MCQs, chat responses, and study plans.', 'Maintain and secure our MongoDB-backed application data, prevent abuse, and troubleshoot service issues.', 'Respond to support, feedback, and password-reset requests.'] },
+  { title: 'AI processing', paragraphs: ['Your submitted study content is sent to our configured AI providers only to deliver the feature you request. AI outputs can be inaccurate or incomplete, so you should review them before relying on them for academic, professional, medical, legal, or other important decisions.'] },
+  { title: 'Authentication and security', paragraphs: ['We use JWT-based authentication to identify signed-in users and protect account-only routes. Passwords are hashed before storage. We apply reasonable technical safeguards, but no internet service can guarantee absolute security; please use a strong, unique password and keep your sign-in details private.'] },
+  { title: 'Payments', paragraphs: ['Premium payments are initiated through Razorpay. We receive payment identifiers, order status, amount, currency, and verification details needed to activate Premium access and keep payment records. We do not store your full card, UPI, or bank-account credentials.'] },
+  { title: 'Cookies, analytics, and advertising', paragraphs: ['We use essential browser storage or cookies to support sign-in and basic preferences. If analytics is enabled, it may collect aggregated usage information to help us improve the service. If Google AdSense is enabled, Google and its partners may use cookies or similar technologies to show and measure personalized or non-personalized ads, subject to your choices and applicable law. See our Cookie Policy for more information.'] },
+  { title: 'Sharing and retention', paragraphs: ['We share data only with service providers needed to operate the product, such as hosting, database, AI, email, and payment providers, or where required by law. We retain account and study data while your account remains active and as reasonably needed for security, legal, and operational purposes.'] },
+  { title: 'Your rights and choices', paragraphs: ['Depending on your location, you may ask to access, correct, export, or delete your personal information, or object to certain processing. You can also manage advertising choices through your browser and Google ad settings where available. To make a request, contact us using the support email below.'] },
+  { title: 'Contact', paragraphs: ['For privacy questions or requests, email support@ainotessummarizer.com. Please replace this address with your verified production support inbox before publishing.'] },
+]
+
+export default function PrivacyPolicy() {
+  return <PolicyPage title="Privacy Policy" description="How AI Notes Summarizer handles account information, study content, payments, cookies, and privacy choices." sections={sections} />
+}

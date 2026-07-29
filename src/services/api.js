@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// A relative URL works both through Vite's local proxy and on the deployed
+// Vercel domain. Set VITE_API_URL only when using a separately hosted backend.
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '')
 
 export const TOKEN_KEY = 'ai_notes_token'
 export const USER_KEY = 'ai_notes_user'

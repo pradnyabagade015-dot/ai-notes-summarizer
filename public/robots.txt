@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /notes
+Disallow: /upload-notes
+Disallow: /summary
+Disallow: /study-planner
+Disallow: /content-generator
+Disallow: /profile
+Disallow: /premium
+Disallow: /support
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+
+Sitemap: https://ainotessummarizer.com/sitemap.xml

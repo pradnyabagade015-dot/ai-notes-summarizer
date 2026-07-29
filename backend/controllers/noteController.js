@@ -1,5 +1,3 @@
-const fs = require('fs')
-const path = require('path')
 const pdfParse = require('pdf-parse')
 const mammoth = require('mammoth')
 const Note = require('../models/Note')
@@ -41,35 +39,34 @@ const uploadNote = async (req, res) => {
 
     if (req.file) {
       originalFileName = req.file.originalname
-      storedFileName = req.file.filename
+      storedFileName = `upload-${Date.now()}`
       fileType = req.file.mimetype
       fileSize = req.file.size
 
       // If content was not provided in body, extract it from uploaded file
       if (!content || content.trim().length === 0) {
-        const filePath = req.file.path
+        const fileBuffer = req.file.buffer
         const isPdf = fileType === 'application/pdf' || originalFileName.toLowerCase().endsWith('.pdf')
         const isDocx = fileType.includes('officedocument') || originalFileName.toLowerCase().endsWith('.docx')
         const isTxt = fileType === 'text/plain' || originalFileName.toLowerCase().endsWith('.txt')
 
         if (isPdf) {
           try {
-            const dataBuffer = fs.readFileSync(filePath)
-            const pdfData = await pdfParse(dataBuffer)
+            const pdfData = await pdfParse(fileBuffer)
             content = pdfData.text || ''
           } catch (pdfErr) {
             console.error(`[uploadNote] Failed to extract text from PDF "${originalFileName}":`, pdfErr.message)
           }
         } else if (isDocx) {
           try {
-            const docxResult = await mammoth.extractRawText({ path: filePath })
+            const docxResult = await mammoth.extractRawText({ buffer: fileBuffer })
             content = docxResult.value || ''
           } catch (docxErr) {
             console.error(`[uploadNote] Failed to extract text from DOCX "${originalFileName}":`, docxErr.message)
           }
         } else if (isTxt) {
           try {
-            content = fs.readFileSync(filePath, 'utf8')
+            content = fileBuffer.toString('utf8')
           } catch (txtErr) {
             console.error(`[uploadNote] Failed to read TXT file "${originalFileName}":`, txtErr.message)
           }
@@ -172,13 +169,6 @@ const deleteNote = async (req, res) => {
     const note = await Note.findOne({ _id: req.params.id, userId: req.user._id })
     if (!note) {
       return res.status(404).json({ success: false, message: 'Note not found' })
-    }
-
-    if (note.storedFileName && !note.storedFileName.startsWith('text-')) {
-      const filePath = path.join(__dirname, '..', 'uploads', note.storedFileName)
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath)
-      }
     }
 
     await Summary.deleteMany({ userId: req.user._id, noteId: note._id })
