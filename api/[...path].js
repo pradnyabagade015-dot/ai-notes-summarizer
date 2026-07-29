@@ -5,6 +5,20 @@ import connectDB from '../backend/config/db.js'
 // /api/auth/login and /api/payments/verify.
 export default async function handler(req, res) {
   try {
+    // An explicit Vercel route may expose the function pathname to Node. Restore
+    // the requested API path before handing control to Express.
+    const requestUrl = new URL(req.url, 'http://localhost')
+    if (requestUrl.pathname === '/api/[...path].js' && requestUrl.searchParams.has('path')) {
+      const apiPath = requestUrl.searchParams.get('path')
+      requestUrl.searchParams.delete('path')
+      req.url = `/api/${apiPath}${requestUrl.search}`
+    }
+
+    // This route verifies Vercel-to-Express routing without requiring MongoDB.
+    if (req.url === '/api/test' || req.url.startsWith('/api/test?')) {
+      return app.handle(req, res)
+    }
+
     await connectDB()
     // Express receives the original request, including its HTTP method and
     // /api/... pathname. Do not filter methods here: Express owns routing for

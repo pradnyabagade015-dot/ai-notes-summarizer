@@ -46,6 +46,10 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.get('/api/test', (_req, res) => {
+  res.status(200).json({ status: 'API working' })
+})
+
 app.use('/api/health', healthRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/notes', noteRoutes)
