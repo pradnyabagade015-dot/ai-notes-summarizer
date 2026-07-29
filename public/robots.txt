@@ -15,4 +15,4 @@ Disallow: /signup
 Disallow: /forgot-password
 Disallow: /reset-password
 
-Sitemap: https://ainotessummarizer.com/sitemap.xml
+Sitemap: https://ai-notes-summarizer-app-one.vercel.app/sitemap.xml

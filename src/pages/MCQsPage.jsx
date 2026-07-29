@@ -38,11 +38,9 @@ function MCQsPage() {
   }, [loadData]);
 
   const handleGenerateMCQs = async () => {
-    console.log("Generate MCQs clicked");
     try {
       setGenerating(true);
       setError('');
-      console.log("Calling apiGenerateAndGetMCQsForNote");
       const mcqsResponse = await apiGenerateAndGetMCQsForNote(noteId);
       setMcqs(mcqsResponse.mcqs || []);
     } catch (err) {
