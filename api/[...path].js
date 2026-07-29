@@ -6,7 +6,10 @@ import connectDB from '../backend/config/db.js'
 export default async function handler(req, res) {
   try {
     await connectDB()
-    return app(req, res)
+    // Express receives the original request, including its HTTP method and
+    // /api/... pathname. Do not filter methods here: Express owns routing for
+    // GET, POST, PUT, PATCH, DELETE, and OPTIONS requests.
+    return app.handle(req, res)
   } catch (error) {
     console.error('API initialization failed:', error.message)
     return res.status(503).json({
